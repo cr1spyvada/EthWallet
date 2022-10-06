@@ -16,11 +16,13 @@ import '@ethersproject/shims';
 import {ethers} from 'ethers';
 
 const App = () => {
-  const [txState, setTxState] = useState(null);
+  const [txState, setTxState] = useState('No transaction');
+  const [walletAddress, setWalletAddress] = useState('');
+  const [transactionAmount, setTxnAmt] = useState('');
   const PRIVATE_KEY =
     '251d600a7ee83e1edd9b96b409f8295441c372e0c095495250acf7e85b52bc76';
-  const walletAddress = '0xED068441C094Cbc40F6a5e4e4b9cdCfb43385807';
-  const transactionAmount = '0.0000001';
+  // const walletAddress = '0xED068441C094Cbc40F6a5e4e4b9cdCfb43385807';
+  // const transactionAmount = '0.0000001';
   const connect = async () => {
     // A Web3Provider wraps a standard Web3 provider, which is
     // what MetaMask injects as window.ethereum into each page
@@ -56,13 +58,23 @@ const App = () => {
     });
   };
   return (
-    <View style={styles.container}>
-      <TextInput placeholder="transaction value" style={styles.textBox} />
-      <TextInput placeholder="address" style={styles.textBox} />
-      <TouchableOpacity onPress={connect}>
-        <Text style={styles.button}>Connect</Text>
-      </TouchableOpacity>
-      <Text>{txState}</Text>
+    <View style={styles.body}>
+      <View style={styles.container}>
+        <TextInput
+          onChangeText={text => setTxnAmt(text)}
+          placeholder="transaction value(in ether)"
+          style={styles.textBox}
+        />
+        <TextInput
+          onChangeText={val => setWalletAddress(val)}
+          placeholder="address"
+          style={styles.textBox}
+        />
+        <TouchableOpacity onPress={connect}>
+          <Text style={styles.button}>Make Transaction</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.textContainer}>{txState}</Text>
     </View>
   );
 };
@@ -70,25 +82,42 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
+  body: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
   container: {
     backgroundColor: 'yellow',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '80%',
+    height: '40%',
+    borderRadius: 10,
   },
   textBox: {
     color: 'black',
     width: '75%',
     backgroundColor: 'white',
-    margin: 2,
+    margin: 4,
     borderRadius: 10,
   },
   button: {
-    padding: 10,
-    margin: 5,
+    padding: 15,
+    // margin: 5,
     borderRadius: 10,
     backgroundColor: 'green',
     color: 'white',
-    marginHorizontal: 'auto',
+  },
+  textContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    fontSize: 18,
+    color: 'black',
   },
 });
