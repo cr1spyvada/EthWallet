@@ -62,16 +62,18 @@ const App = () => {
   return (
     <View style={styles.body}>
       <View style={styles.container}>
+        <Text style={styles.text}>Transaction Value</Text>
         <TextInput
           onChangeText={text => setTxnAmt(text)}
           value={transactionAmount}
           placeholder="transaction value(in ether)"
           style={styles.textBox}
         />
+        <Text style={styles.text}>Wallet Address</Text>
         <TextInput
           onChangeText={val => setWalletAddress(val)}
           value={walletAddress}
-          placeholder="address"
+          placeholder="wallet address"
           style={styles.textBox}
         />
         <TouchableOpacity
@@ -104,6 +106,11 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '40%',
     borderRadius: 10,
+  },
+  text: {
+    color: 'black',
+    fontSize: 14,
+    fontWeight: '500',
   },
   textBox: {
     color: 'black',
