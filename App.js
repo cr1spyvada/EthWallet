@@ -24,8 +24,10 @@ const App = () => {
   // const walletAddress = '0xED068441C094Cbc40F6a5e4e4b9cdCfb43385807';
   // const transactionAmount = '0.0000001';
   const connect = async () => {
+    if (!txState === 'No transaction' && !txState === 'Completed') return;
     // A Web3Provider wraps a standard Web3 provider, which is
     // what MetaMask injects as window.ethereum into each page
+    setTxState('Pending');
     const provider = new ethers.providers.getDefaultProvider('goerli');
 
     // MetaMask requires requesting permission to connect users accounts
@@ -62,15 +64,19 @@ const App = () => {
       <View style={styles.container}>
         <TextInput
           onChangeText={text => setTxnAmt(text)}
+          value={transactionAmount}
           placeholder="transaction value(in ether)"
           style={styles.textBox}
         />
         <TextInput
           onChangeText={val => setWalletAddress(val)}
+          value={walletAddress}
           placeholder="address"
           style={styles.textBox}
         />
-        <TouchableOpacity onPress={connect}>
+        <TouchableOpacity
+          disabled={!txState === 'No transaction' && !txState === 'Completed'}
+          onPress={connect}>
           <Text style={styles.button}>Make Transaction</Text>
         </TouchableOpacity>
       </View>
